@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace PracticeConsole.Data
 {
     
@@ -97,7 +99,14 @@ namespace PracticeConsole.Data
         public double Years
         {
             get { return _Years; }
-            set { _Years = value; }
+            set 
+            {
+                if (!Utilities.IsPositive(value))
+                {
+                    throw new ArgumentNullException("Year can not be a negative value.");
+                }
+                _Years = value; 
+            }
         }
 
 
