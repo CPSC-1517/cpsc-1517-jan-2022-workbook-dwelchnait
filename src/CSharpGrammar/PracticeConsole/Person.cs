@@ -33,7 +33,7 @@ namespace PracticeConsole.Data
         public string FirstName
         {
             get { return _FirstName; }
-            set
+            private set
             {
                 if(Utilities.IsEmpty(value))
                     throw new ArgumentNullException("First name is required.");
@@ -44,7 +44,7 @@ namespace PracticeConsole.Data
         public string LastName
         {
             get { return _LastName; }
-            set
+            private set
             {
                 if (Utilities.IsEmpty(value))
                     throw new ArgumentNullException("Last name is required.");
@@ -55,12 +55,13 @@ namespace PracticeConsole.Data
 
         //composition actually uses the other class as a property/field within
         //the definition of the class being defined
+        //in this example Address is a field (data member)
 
         public ResidentAddress Address;
 
         //composition
 
-        public List<Employment> EmploymentPositions { get; set; }
+        public List<Employment> EmploymentPositions { get; private set; }
 
         //public Person()
         //{
@@ -96,6 +97,17 @@ namespace PracticeConsole.Data
                 //  empty List<T>
                 EmploymentPositions = new List<Employment>();
             Address = address;
+        }
+
+        public void ChangeName(string firstname, string lastname)
+        {
+            FirstName = firstname.Trim();
+            LastName = lastname.Trim();
+        }
+
+        public void AddEmployment(Employment employment)
+        {
+            EmploymentPositions.Add(employment);
         }
        
     }
