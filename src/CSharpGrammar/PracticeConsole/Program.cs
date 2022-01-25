@@ -32,9 +32,39 @@ static void DisplayPerson(Person person)
 {
     DisplayString($"{person.FirstName} {person.LastName}");
     DisplayString($"{person.Address.ToString()}");
-    foreach(var emp in person.EmploymentPositions)
+
+    //in our example, the Person constructor ensures that EmploymentPosition
+    //  exists (List was declared) ; this makes the need for the null mute
+    if (person.EmploymentPositions != null)
     {
-        DisplayString($"{emp.ToString()}");
+        //this loop is a forward moving pre-test loop
+        //what it checks is "is there another link element to look at"
+        //Yes: use the element
+        //No: exit loop
+        foreach (var emp in person.EmploymentPositions)
+        {
+            DisplayString(emp.ToString());
+        }
+
+        //a List<T> can actually be manipulated like an array
+        //is a pre-test loop 
+
+        for (int i = 0; i < person.EmploymentPositions.Count; i++)
+        {
+            DisplayString(person.EmploymentPositions[i].ToString());
+        }
+
+
+        if (person.EmploymentPositions.Count > 0)
+        {
+            int x = 0;
+            //is a post-test loop 
+            do
+            {
+                DisplayString(person.EmploymentPositions[x].ToString());
+                x++;
+            } while (x < person.EmploymentPositions.Count);
+        }
     }
 }
 
