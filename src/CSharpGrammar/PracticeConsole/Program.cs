@@ -11,7 +11,7 @@ using System; //in .net 6 some using statement visible in .net 5 are
               //using statements to explcitly reference other namespaces
 
 // See https://aka.ms/new-console-template for more information
-DisplayString("Hello World!");
+//DisplayString("Hello World!");
 
 //Fully qualified name
 //PracticeConsole.Data.Employment job = CreateJob();
@@ -20,8 +20,10 @@ ResidentAddress Address = CreateAddress();
 
 //create a Person
 Person Me = CreatePerson(Job, Address);
-if (Me != null)
-    DisplayPerson(Me);
+//if (Me != null)
+//    DisplayPerson(Me);
+
+ArrayReview(Me);
 
  static void DisplayString(string text)
 {
@@ -162,4 +164,87 @@ Person CreatePerson(Employment job, ResidentAddress address)
         DisplayString("Run time error: " + ex.Message);
     }
     return thePerson;
+}
+
+void ArrayReview(Person person)
+{
+    //Declare a single-dimensional array size 5
+    //In this declaration the value in each element is set
+    //  to the datatype's default (numeric - > 0)
+    int [] array1 = new int [5]; //one can use a literal for the size
+    //PrintArray(array1, 5, "declare int array size 5");
+
+    //Declare and set array elements
+    int[] array2 = new int[] {1, 2, 4, 8, 16};
+    //PrintArray(array2, 5, "declare int array size using a list of supplied values");
+
+    //alternate syntax
+    //size of the array can be determind using the method .Count() of the array collection 
+    //  using the inherited class IEnumerable (Array class derived from the base class IEnumerable
+    //  which is derived from its base class Collections)
+    //size of the array can be determind using the read-only property (just has a get{}) of the
+    //  Array class called .Length
+
+    int[] array3 = { 1, 3, 6, 12, 24 };
+   // PrintArray(array3, array3.Length, "declare int array with just a list of supplied values");
+
+    //Travsering to an array altering elements
+    //remember that the array when declared is physically created in memory
+    //each element (cell) has a given value, even if it is the datatype default
+    //when you are "adding" to an array you are really just altering the element value
+
+    //logical counter for your array size to indicate the "valid meaningful" values for processing
+    int lsarray1 = 0;
+    int lsarray2 = array2.Count();  //IEnumerable method
+    int lsarray3 = array3.Length;   //Array read-only property
+
+    Random random = new Random();
+    int randomvalue = 0;
+    while (lsarray1 < array1.Length)
+    {
+        randomvalue = random.Next(0,100);
+        array1[lsarray1] = randomvalue;
+        lsarray1++;
+    }
+  //  PrintArray(array1, lsarray1, "array load with random values");
+
+    //Alter a element randomly selected to a new value
+    int  arrayposition = random.Next(0,array1.Length);
+    randomvalue = random.Next(0, 100);
+    array1[arrayposition] = randomvalue;
+    PrintArray(array1, lsarray1, "randomly replace an array value");
+
+    //Remove an element value from an array
+    //move all array element in positions greater than the removed element position, "up one"
+    //Assume we are removing element 3 (index 2)
+    int logicalelementnumber = 3; //index of value is logicalposition - 1
+    for (int index = --logicalelementnumber; index < array1.Length - 1; index++)
+    {
+        array1[index] = array1 [index + 1];
+    }
+    lsarray1--;
+    array1[array1.Length - 1] = 0;
+    PrintArray(array1, array1.Length, "remove an array value");
+
+}
+
+
+void PrintArray(int [] array, int size, string text)
+{
+    Console.WriteLine($"\n{text}\n");
+    //item represents an element in the array
+    //array is your collection (array [])
+    //processing will be start (0) to end (size-1)
+    foreach(var item in array)
+    {
+        Console.Write($"{item},");
+    }
+    Console.WriteLine("\n");
+    //using the for loop this display output the
+    //      array back to front
+    for (int i = size -1; i >= 0; i--)
+    {
+        Console.Write($"{array[i]},");
+    }
+    Console.WriteLine("\n");
 }
