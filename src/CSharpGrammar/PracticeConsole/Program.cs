@@ -179,19 +179,19 @@ void ArrayReview(Person person)
     //PrintArray(array2, 5, "declare int array size using a list of supplied values");
 
     //alternate syntax
-    //size of the array can be determind using the method .Count() of the array collection 
-    //  using the inherited class IEnumerable (Array class derived from the base class IEnumerable
-    //  which is derived from its base class Collections)
-    //size of the array can be determind using the read-only property (just has a get{}) of the
-    //  Array class called .Length
-
     int[] array3 = { 1, 3, 6, 12, 24 };
-   // PrintArray(array3, array3.Length, "declare int array with just a list of supplied values");
+    // PrintArray(array3, array3.Length, "declare int array with just a list of supplied values");
 
     //Travsering to an array altering elements
     //remember that the array when declared is physically created in memory
     //each element (cell) has a given value, even if it is the datatype default
     //when you are "adding" to an array you are really just altering the element value
+
+    //size of the array can be determind using the method .Count() of the array collection 
+    //  using the inherited class IEnumerable (Array class derived from the base class IEnumerable
+    //  which is derived from its base class Collections)
+    //size of the array can be determind using the read-only property (just has a get{}) of the
+    //  Array class called .Length
 
     //logical counter for your array size to indicate the "valid meaningful" values for processing
     int lsarray1 = 0;
