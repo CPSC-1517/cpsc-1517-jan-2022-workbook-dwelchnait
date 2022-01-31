@@ -13,6 +13,7 @@ namespace PracticeConsole.Data
 
     public struct ResidentAddress
     {
+
         public int Number;
         public string Address1;
         public string Address2;

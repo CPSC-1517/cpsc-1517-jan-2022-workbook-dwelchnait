@@ -57,6 +57,7 @@ namespace PracticeConsole.Data
         //the definition of the class being defined
         //in this example Address is a field (data member)
 
+
         public ResidentAddress Address;
 
         //composition
