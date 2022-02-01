@@ -1,6 +1,10 @@
 trainee,Entry,0.5
 worker,TeamMember,3.5
+Owner,4.5
 worker,TeamMember,2.1
 leader,TeamLeader,7.8
+,DepartmentHead,4.5
+Bad Years,Owner,Bob
 worker,Supervisor,6
 worker,DepartmentHead,2.1
+Bad Years,Owner,-4.5
