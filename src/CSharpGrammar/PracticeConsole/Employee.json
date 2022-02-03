@@ -1,0 +1,26 @@
+{
+  "FirstName": "Lowand",
+  "LastName": "Behold",
+  "EmploymentPositions": [
+    {
+      "Title": "worker",
+      "Level": 1,
+      "Years": 2.1
+    },
+    {
+      "Title": "leader",
+      "Level": 2,
+      "Years": 7.8
+    },
+    {
+      "Title": "Boss",
+      "Level": 3,
+      "Years": 5.5
+    },
+    {
+      "Title": "DP IT",
+      "Level": 4,
+      "Years": 0.8
+    }
+  ]
+}

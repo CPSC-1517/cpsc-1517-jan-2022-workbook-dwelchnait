@@ -22,24 +22,47 @@ ResidentAddress Address = CreateAddress();
 
 //create a Person
 Person Me = CreatePerson(Job, Address);
-//if (Me != null)
-//    DisplayPerson(Me);
+if (Me != null)
+    DisplayPerson(Me);
 
 //ArrayReview(Me);
 
+#region CSV Read and Write file sample
 //string pathname = CreateCSVFile();
-string pathname = "../../../Employment.dat"; //can use this if you have manually created your data file
+//string pathname = "../../../Employment.dat"; //can use this if you have manually created your data file
 
 
-Console.WriteLine("\n Results of parsing the incoming CSV Employment data file\n");
-List<Employment> Jobs = ReadCSVFile(pathname);
-Console.WriteLine("\n Results of good parsed the incoming CSV Employment data\n");
-foreach (Employment employment in Jobs)
-{
-    DisplayString(employment.ToString());
-}
+//Console.WriteLine("\n Results of parsing the incoming CSV Employment data file\n");
+//List<Employment> Jobs = ReadCSVFile(pathname);
+//Console.WriteLine("\n Results of good parsed the incoming CSV Employment data\n");
+//foreach (Employment employment in Jobs)
+//{
+//    DisplayString(employment.ToString());
+//}
+#endregion
 
+#region Modulus division Sample
+//modulus division
+// operator is %
+// example oddeven
+//  if the number is divisable by 2 it is even, that is 0 as a remainder
+//  if the number is not divisable by 2 it is odd, that is the remainer will NOT be 0
+//  variable % 2 I can test the result: if (variable % 2 == 0) even else odd
+//   
+// weights must be in multiples of 100
+// so a number is said to be a multiple of 100 if the remainder is 0
+// if (variable % 100 == 0) is multiple else is NOT multiple
 
+// 38800 % 100 result is 0  (388 * 100)
+// 38880 % 100 result is 80 (388.8 * 100)
+#endregion
+
+#region JSON file Read and Write
+string Jsonpathname = "../../../Employee.json";
+SaveAsJson(Me, Jsonpathname);
+Person You = ReadAsJson(Jsonpathname);
+DisplayPerson(You);
+#endregion
 
 static void DisplayString(string text)
 {
@@ -67,22 +90,22 @@ static void DisplayPerson(Person person)
         //a List<T> can actually be manipulated like an array
         //is a pre-test loop 
 
-        for (int i = 0; i < person.EmploymentPositions.Count; i++)
-        {
-            DisplayString(person.EmploymentPositions[i].ToString());
-        }
+        //for (int i = 0; i < person.EmploymentPositions.Count; i++)
+        //{
+        //    DisplayString(person.EmploymentPositions[i].ToString());
+        //}
 
 
-        if (person.EmploymentPositions.Count > 0)
-        {
-            int x = 0;
-            //is a post-test loop 
-            do
-            {
-                DisplayString(person.EmploymentPositions[x].ToString());
-                x++;
-            } while (x < person.EmploymentPositions.Count);
-        }
+        //if (person.EmploymentPositions.Count > 0)
+        //{
+        //    int x = 0;
+        //    //is a post-test loop 
+        //    do
+        //    {
+        //        DisplayString(person.EmploymentPositions[x].ToString());
+        //        x++;
+        //    } while (x < person.EmploymentPositions.Count);
+        //}
     }
 }
 
@@ -244,7 +267,6 @@ void ArrayReview(Person person)
 
 }
 
-
 void PrintArray(int [] array, int size, string text)
 {
     Console.WriteLine($"\n{text}\n");
@@ -320,6 +342,7 @@ string CreateCSVFile()
     }
     return Path.GetFullPath(pathname);
 }
+
 List<Employment> ReadCSVFile(string pathname)
 {
     List<Employment> inputList = new List<Employment>();
@@ -379,4 +402,49 @@ List<Employment> ReadCSVFile(string pathname)
     return inputList;
 }
 
+void SaveAsJson(Person me, string pathname)
+{
+    //the term use to read and write Json files is Serialization
+    //the classes use are referred to as serializers
+    //with writing we can make the file produced more readable by using
+    //  indentation
+    //Json is very good at using object and properties however, it
+    //  needs help/prompting to work better with fields
+    JsonSerializerOptions options = new JsonSerializerOptions
+    {
+        WriteIndented = true,
+        IncludeFields = true
+    };
+    try
+    {
+        //Serialization
+        //produce of serialization is a string
+        string jsonstring = JsonSerializer.Serialize<Person>(me, options);
+        //output the json string to your file indicated in the path
+        File.WriteAllText(pathname, jsonstring);
+    }
+    catch(Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+}
 
+Person ReadAsJson(string pathname)
+{
+    Person you = null;
+    try
+    {
+        //bring in the text from the file
+        string jsonstring = File.ReadAllText(pathname);
+
+        //use the deserializer to unpack the json string into
+        //  the expected structure (<Person>)
+        you = JsonSerializer.Deserialize<Person>(jsonstring);
+    }
+    catch(Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+
+    return you;
+}
