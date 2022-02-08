@@ -41,7 +41,7 @@ namespace PracticeConsole.Data
             get { return _FirstName; }
             private set
             {
-                if(Utilities.IsEmpty(value))
+                if (Utilities.IsEmpty(value))
                     throw new ArgumentNullException("First name is required.");
                 _FirstName = value;
             }
