@@ -4,3 +4,81 @@
     ViewData["Title"] = "Basic Data Management";
 }
 <h1>Basic Data Management</h1>
+
+@*
+    Investigate using forms on a webpage
+
+    controls: <input> <select> <button> <form> <label> <textarea>
+    helper tags: asp-for asp-page-handler
+
+    <form> parameters: method= indicates how data is transfered to server
+                                get: visible on Url in plain text
+                                post: embedded within the form objects sent to the server
+                                      not visible
+                       action= directs the server to the page to process form
+                               "" directs to current page
+                               optional
+    <label> no need for parameters, can have helper tags such as asp-for 
+            depending on css stylesheet, you can get different results
+    
+    <input> used to accept input from the page user
+            has various types of acceptable inputs (type=)
+            can tie the control to a property on the ModelPage directly (asp-for="propertyname")
+
+    <select> used to display a list of items to select a value
+             can be tied to a ModelPage property (asp-for)
+             consists of 2 parts on each line in the list of selectable items
+             a line of a selectable item is indicated using the <option>
+                 <option value="returnedvalue">display text</option>
+                 returnedvalue is NOT visible to the page user
+                               is the value sent to the ModelPage
+                 display text  used by the page user to make the selection
+                               is the visible portion of the selection line
+            there are times when you wish the use to have a "prompt" in the display list
+                this is referred to as the prompt line
+                this is NOT a valid value for your data
+                it may be used to indicate no choice (a property can be nullable, handled logically)
+
+    <textarea> display a large text input box area for the web page user to
+                  enter a large amount of data
+               display size is controlled using rows= (vertical) and cols= (horizontal)
+               auto-scroll bars
+
+    <button>  three types (type=)
+                 submit: sends the form to the server for processing
+                 reset:  locally clear the form and does NOT send to server for processing
+                 button: 
+              you can assign a specific value associated with the button that can be
+                 logically tested in your ModelPage (value=) (optional)
+              to identify the contol you can use (optional)
+                 id= basically used by javascript to identify the control
+                 name= is used by the Request["xxx"] to identify the control in your C# code
+                 values can be the same
+              helper tag to identifer processing OnPost on the ModelPage (asp-page-helper)
+*@
+<form method="post">
+    <label>
+        Enter a number <input type="number" asp-for="Num" />
+
+    </label>
+
+    <label>
+        Select a favourite course; (drop down list)
+        <select asp-for="FavouriteCourse">
+            <option value="">select ...</option>
+            <option value="1008">COMP1008</option>
+            <option value="1517">CPSC1517</option>
+            <option value="2018">DMIT2018</option>
+        </select>
+    </label>
+
+    <label>
+        Comments
+        <textarea asp-for="Comments" rows="5" cols="100"></textarea>
+    </label>
+    <br/>
+    <button type="submit" value="somevalue" id="jsIdentifier"
+            name="RequestObjectIdentifier">Press Me (submit form)</button>
+</form>
+<br/>
+<p>@Model.FeedBack</p>
