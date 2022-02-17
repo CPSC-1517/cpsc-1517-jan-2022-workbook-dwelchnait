@@ -22,5 +22,13 @@
       "Level": 4,
       "Years": 0.8
     }
-  ]
+  ],
+  "Address": {
+    "Unit": null,
+    "City": "Vancover",
+    "Number": 10767,
+    "Address1": "106 ST NW",
+    "Address2": null,
+    "ProvinceState": "AB"
+  }
 }

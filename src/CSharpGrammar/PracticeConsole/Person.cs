@@ -100,9 +100,17 @@ namespace PracticeConsole.Data
         //  the program is to use the constructor when the class instance
         //  is created
 
-        public Person(string firstname, string lastname,
-                        List<Employment> employmentpositions,
-                        ResidentAddress address)
+        //NOTE: FOR READING JSON FILES!!!!!!!!!!!
+
+        //your constructor parameter names MUST MATCH your property variable names.
+        //the order in which your properties are phyiscally code in the class, does NOT
+        //  affected the reading
+        //the parameter names are NOT case sensitive
+        //the order of the paraeters on the constructor does not affect the reading
+
+        public Person(string firstname, string lastname, ResidentAddress Address,
+                        List<Employment> employmentpositions
+                        )
         {
             FirstName = firstname;
             LastName = lastname;
@@ -112,7 +120,10 @@ namespace PracticeConsole.Data
                 //allows a null value and the class to have an
                 //  empty List<T>
                 EmploymentPositions = new List<Employment>();
-            Address = address;
+            //IF your parameter name is identical to the property name, to have your
+            //  code work appropriately, place the key word "this." in front of the 
+            //  property  referrence
+            this.Address = Address;
         }
 
         public void ChangeName(string firstname, string lastname)

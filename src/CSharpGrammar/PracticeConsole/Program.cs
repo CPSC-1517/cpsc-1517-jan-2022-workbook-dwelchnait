@@ -165,7 +165,7 @@ Person CreatePerson(Employment job, ResidentAddress address)
         Jobs.Add(new Employment("worker", SupervisoryLevel.TeamMember, 2.1));
         Jobs.Add(new Employment("leader", SupervisoryLevel.TeamLeader, 7.8));
         Jobs.Add(job);
-        thePerson = new Person("DonWithJobs", "Welch", Jobs, address);
+        thePerson = new Person("DonWithJobs", "Welch", address, Jobs );
 
         //esception testing
         // no first name
