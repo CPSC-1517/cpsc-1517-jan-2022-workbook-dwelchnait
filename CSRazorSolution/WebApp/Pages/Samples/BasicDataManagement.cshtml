@@ -77,8 +77,20 @@
         <textarea asp-for="Comments" rows="5" cols="100"></textarea>
     </label>
     <br/>
-    <button type="submit" value="somevalue" id="jsIdentifier"
-            name="RequestObjectIdentifier">Press Me (submit form)</button>
+    <button type="submit" value="uniquevalueA" id="jsIdentifier"
+            name="RequestObjectIdentifier" asp-page-handler="A">
+            Press Me A (submit form)
+        </button>
+            &nbsp;&nbsp;
+    <button type="submit" value="uniquevalueB" id="jsIdentifier"
+            name="RequestObjectIdentifier" asp-page-handler="B">
+            Press Me B (submit form)
+       </button>
+            &nbsp;&nbsp;
+    <button type="submit" value="uniquevalueX" id="jsIdentifier"
+            name="RequestObjectIdentifier" >
+            Press Me (submit form)
+       </button>
 </form>
 <br/>
 <p>@Model.FeedBack</p>
