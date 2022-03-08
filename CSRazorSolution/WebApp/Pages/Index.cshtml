@@ -15,4 +15,16 @@
         {
             <p style="color:forestgreen; font-weight:bold;">@Model.MyName</p>
         }
-
+    <br/><br/>
+    @if (Model.buildVersionInfo == null)
+    {
+        <p style="font-weight:bold;">Build Version Unknown</p>
+    }
+    else
+    {
+        <p>Database Version: @Model.buildVersionInfo.Major . 
+                             @Model.buildVersionInfo.Minor .
+                             @Model.buildVersionInfo.Build
+            was released on @Model.buildVersionInfo.ReleaseDate.ToShortDateString()
+        </p>
+    }
