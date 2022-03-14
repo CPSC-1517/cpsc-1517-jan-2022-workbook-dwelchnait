@@ -21,7 +21,7 @@ namespace WestWindSystem.Entities
 
         [Required(ErrorMessage ="Territory description is required")]
         [StringLength(50, ErrorMessage = "Territory description is limited to 50 characters")]
-        public string TerritoryDesccription { get; set;}
+        public string TerritoryDescription { get; set;}
         
         public int RegionID { get; set; }
     }

@@ -44,6 +44,13 @@ namespace WestWindSystem
                 //return the service class instance
                 return new BuildVersionServices(context);
             });
+
+            services.AddTransient<RegionServices>((serviceProvider) =>
+            {
+                var context = serviceProvider.GetService<WestWindContext>();
+                return new RegionServices(context);
+            });
+
         }
 
 

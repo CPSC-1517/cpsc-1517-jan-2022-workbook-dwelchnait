@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 #region Additional Namespaces
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore; //DbContext
 using WestWindSystem.Entities;
 #endregion
 

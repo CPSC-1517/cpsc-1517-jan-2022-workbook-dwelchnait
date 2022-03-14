@@ -1,0 +1,18 @@
+﻿@page
+@model WebApp.Pages.Samples.RegionQueryOneModel
+@{
+    ViewData["Title"] = "PKey Region Query";
+}
+<h1>Query: Region query by primary key</h1>
+
+<p>@Model.FeedbackMessage</p>
+
+<form method="post">
+    <label>
+        Enter Region ID:
+        <input type="number" asp-for="regionid"
+            placeholder="enter your region id number" />
+    </label>
+    <button type="submit">Fetch By Id</button>
+</form>
+
