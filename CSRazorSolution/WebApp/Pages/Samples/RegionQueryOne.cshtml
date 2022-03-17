@@ -33,7 +33,33 @@
             placeholder="enter your region id number"
             step="1" required/>
     </label>
-    <button type="submit" asp-page-handler="Fetch">Fetch By Id</button>
+    <label>
+        Select a Region:
+        <select asp-for="selectRegion">
+            @* if you do not indicate a specific option to display
+                 then the list defaults to the first option line
+            *@
+            <option value="0">select ... </option>
+            @foreach(var item in Model.regionsList)
+            {
+                //to retain the selection, you need to specify a row to be
+                //  the selected option
+                //this is done with the selected attribute on the value 
+                if (item.RegionID == Model.regionid)
+                {
+                    <option value="@item.RegionID" selected>@item.RegionDescription</option>
+
+                }
+                else
+                {
+                    <option value="@item.RegionID">@item.RegionDescription</option>
+                }
+            }
+        </select>
+    </label>
+    <br/>
+    <button type="submit" asp-page-handler="Fetch">Fetch By Id</button>&nbsp;&nbsp;
+    <button type="submit" asp-page-handler="Select" formnovalidate>Select By Description</button>&nbsp;&nbsp;
     <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>
 </form>
 

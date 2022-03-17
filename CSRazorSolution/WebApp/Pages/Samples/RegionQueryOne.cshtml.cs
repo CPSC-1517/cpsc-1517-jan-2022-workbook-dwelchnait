@@ -35,8 +35,23 @@ namespace WebApp.Pages.Samples
 
         public Region regionInfo { get; set; }
 
+        //the List<T> has a null value as the page is created
+        //you can initialize the property to an instance as the page is
+        //      being created by adding = new() to your declaration
+        //if you do, you will have an empty instance of List<T>
+        [BindProperty]
+        public List<Region> regionsList { get; set; } = new();
+
+        [BindProperty]
+        public int selectRegion { get;set; }
+
         public void OnGet()
         {
+            //since the internet is a stateless environment, you need to 
+            //  obtain any list data that is required by your controls or local
+            //  logic on EVERY instance of the page being processed
+            PopulateLists();
+
             if (regionid > 0)
             {
                 regionInfo = _regionServices.Region_GetById(regionid);
@@ -49,6 +64,13 @@ namespace WebApp.Pages.Samples
                     FeedbackMessage = $"ID: {regionInfo.RegionID} Description: {regionInfo.RegionDescription}";
                 }
             }
+        }
+
+        private void PopulateLists()
+        {
+            //this method will obtain the data for any require list to be used
+            //      in populating controls or for local logic
+            regionsList = _regionServices.Region_List();
         }
 
         // generic falling post handler
@@ -69,6 +91,16 @@ namespace WebApp.Pages.Samples
             return RedirectToPage(new {regionid = regionid });
         }
 
+        public IActionResult OnPostSelect()
+        {
+            if (selectRegion < 1)
+            {
+                FeedbackMessage = "Required: Select a region to view.";
+            }
+            //the receiving "regionid" is the routing parameter
+            //the sending "selectRegion" is a BindProperty field
+            return RedirectToPage(new { regionid = selectRegion });
+        }
         // specific post method to use in conjunction with asp-page-handler="xxx"
         public IActionResult OnPostClear()
         {
