@@ -1,0 +1,46 @@
+﻿@page "{searcharg?}"
+@model WebApp.Pages.Samples.PartialFilterSearchModel
+@{
+    ViewData["Title"] = "Partial String Table Query";
+}
+<h1>Partial String query resulting in a Table display</h1>
+
+<p>@Model.Feedback</p>
+
+<form method="post">
+    <label>
+        Enter a partial Territory description:
+        <input type="text" asp-for="searcharg"
+            placeholder="enter your description"/>
+    </label>
+    <br/>
+    <table>
+        <thead>
+            @*used for column titles*@
+            <tr>
+                <th>Territory ID</th>
+                <th>Name</th>
+                <th>Region ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @*used for the table details
+              the number of rows are unsually unknown for a db query
+            *@
+            @foreach(var item in Model.TerritoryInfo)
+            {
+                <tr>
+                    <td>@item.TerritoryID</td>
+                    <td>@item.TerritoryDescription</td>
+                    <td>@item.RegionID</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            @*used for summay table information eg totals*@
+        </tfoot>
+    </table>
+    <button type="submit" asp-page-handler="Fetch">Fetch Territories</button>&nbsp;&nbsp;
+    <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>
+
+</form>
