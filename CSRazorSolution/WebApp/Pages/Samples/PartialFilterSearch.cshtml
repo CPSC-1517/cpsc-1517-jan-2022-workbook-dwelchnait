@@ -61,7 +61,44 @@
                     }
                 </tbody>
                 <tfoot>
-                 @*used for summay table information eg totals*@
+                 @*used for summay table information eg totals
+                   used for displaying paging information                                       
+                 *@
+                    <tr>
+                        <td colspan="3">
+                            @{
+                                //the pageRef is the string representation of the
+                                //  the value to be displayed AND it's numeric
+                                //the string maybe be a character line : Next
+                                //the string maybe be a numeric : 4
+                                //  First Previous 1 2 3 4 5 Next Last
+                                foreach(var pageRef in Model.Pager)
+                                {
+                                    if (pageRef == Model.Pager.CurrentPage)
+                                    {
+                                        <b>@pageRef.Text</b>
+                                    }
+                                    else
+                                    {
+                                        //create an anchor tag to move to
+                                        //  the desired collection page
+                                        //the target of the anchor destination
+                                        //  is your current web cshtml
+                                        //this will cause a OnGet issue
+                                        // .Page is the numeric representation
+                                        //      of the desired page
+                                        //for the asp-page your page name reference
+                                        //  MUST be based from the folder name Pages
+                                        <a title="Page @pageRef.Page"
+                                           asp-page="/Samples/PartialFilterSearch"
+                                           asp-route-currentpage="@pageRef.Page">
+                                            @pageRef.Text   
+                                         </a>
+                                    }
+                                }
+                            }
+                        </td>
+                    </tr>
                 </tfoot>
             </table>
         }
