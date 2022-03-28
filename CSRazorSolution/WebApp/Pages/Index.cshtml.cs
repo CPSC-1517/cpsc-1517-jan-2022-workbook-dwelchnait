@@ -37,12 +37,13 @@ namespace WebApp.Pages
 
         public string MyName { get; set; }
 
+        public int picker { get; set; }
         public BuildVersion buildVersionInfo { get; set; }
 
         public void OnGet()
         {
             Random random = new Random();
-            int value = random.Next(0, 100);
+            int value = random.Next(0, 20);
             if (value % 2 == 0)
             {
                 MyName = $"Don welcome you to the Razor World ({value})";
@@ -51,7 +52,7 @@ namespace WebApp.Pages
             {
                 MyName = null;
             }
-
+            picker = value;
             //consume a service (aka method) from the services BuildVersionServices
             buildVersionInfo = _buildVersionServices.GetBuildVersion();
         }
