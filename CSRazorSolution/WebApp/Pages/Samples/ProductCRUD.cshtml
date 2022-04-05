@@ -1,0 +1,73 @@
+﻿@page "{productid?}"
+@model WebApp.Pages.Samples.ProductCRUDModel
+@{
+        ViewData["Title"] = "Product Maintenance";
+
+}
+
+<style>
+   :root {
+        --max-body-width: 60rem;
+    }
+
+    .setflex {
+        display: flex;
+    }
+
+    .onethird{
+        width: 31%;
+        margin-right: 2%;
+    }
+
+    .onehalf {
+        width: 47%;
+        margin-right: 3%;
+    }
+
+    .smallbox {
+        width: 60px;
+    }
+</style>
+
+<h1>Product Maintenance: CRUD Product ID : @Model.productid</h1>
+
+@if (Model.HasFeedback)
+{
+    <p>@Model.Feedback</p>
+}
+@if (Model.HasError)
+{
+    <p>@Model.ErrorMessage</p>
+}
+
+<form method="post">
+
+    @* TODO: setup the parts of the Product*@
+
+
+    @* Managing the buttons, restricting user access*@
+    @if (Model.ProductInfo != null)
+    {
+        <button type="submit" asp-page-handler="New" disabled>Save New</button>
+        <button type="submit" asp-page-handler="Update">Update</button>
+        @* add Javascript prompt for delete confirmation using the onclick *@
+        <button type="submit" asp-page-handler="Delete" formnovalidate
+                onclick="return confirm('Are you sure you wish to discontinue the product?')">
+            Delete
+        </button>
+        <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>
+        <button type="submit" asp-page-handler="Search" formnovalidate>Search</button>
+    }
+    else
+    {
+    <button type="submit" asp-page-handler="New">Save New</button>
+    <button type="submit" asp-page-handler="Update" disabled>Update</button>
+    @* add Javascript prompt for delete confirmation using the onclick *@
+    <button type="submit" asp-page-handler="Delete" formnovalidate disabled
+            onclick="return confirm('Are you sure you wish to discontinue the product?')">
+        Delete
+    </button>
+    <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>
+    <button type="submit" asp-page-handler="Search" formnovalidate>Search</button>
+    }
+</form>

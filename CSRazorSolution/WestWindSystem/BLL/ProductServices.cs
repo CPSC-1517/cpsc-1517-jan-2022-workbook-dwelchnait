@@ -34,7 +34,7 @@ namespace WestWindSystem.BLL
         {
             IEnumerable<Product> info = _context.Products
                                 .Where(x => x.CategoryID == categoryid)
-                                .OrderBy(x => x.CategoryID);
+                                .OrderBy(x => x.ProductName);
             return info.ToList();
         }
 

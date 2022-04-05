@@ -1,0 +1,111 @@
+﻿@page "{searcharg?}"
+@model WebApp.Pages.Samples.CategoryProductsModel
+@{
+    ViewData["Title"] = "Category Products";
+}
+
+<style>
+   :root {
+        --max-body-width: 60rem;
+    }
+
+    .setflex {
+        display: flex;
+    }
+
+    .onethird{
+        width: 31%;
+        margin-right: 2%;
+    }
+
+    .onehalf {
+        width: 47%;
+        margin-right: 3%;
+    }
+
+    .smallbox {
+        width: 60px;
+    }
+</style>
+
+<h1>Category Products: Select Product for Maintenance</h1>
+
+<p>@Model.Feedback</p>
+
+<form method="post">
+    <label>
+        Select a category:
+        <select asp-for="searcharg">
+            <option value="0">select ...</option>
+            @foreach (var cat in Model.CategoryList)
+            {
+                <option value="@cat.CategoryID" selected=@(cat.CategoryID == Model.searcharg )>
+                    @cat.CategoryName
+                </option>
+            }
+        </select>
+    </label>
+    <br/>
+    @*restrict the display of the table to when there is data to view*@
+    @if (Model.ProductInfo != null)
+    {
+        if (Model.ProductInfo.Count == 0)
+        {
+            <p style="color:blueviolet; font-weight:bold; font-size:large;">
+                There are no products matching your search request.
+            </p>
+        }
+        else
+        {
+            <table>
+                <thead>
+                    @*used for column titles*@
+                    <tr>
+                        <th>Product</th>
+                        <th>Supplier</th>
+                        <th>Unit Size</th>
+                        <th>Disc</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    @foreach (var item in Model.ProductInfo)
+                    {
+                        <tr>
+                            <td>
+                                <a href="/Samples/ProductCRUD/@item.ProductID">
+                                    @item.ProductName
+                                </a>
+                            </td>
+                            <td><select disabled="true">
+                                    @foreach (var supplier in Model.SupplierList)
+                                    {
+                                        if (supplier.SupplierID == item.SupplierID)
+                                        {
+                                            <option value="@supplier.SupplierID" selected>@supplier.CompanyName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@supplier.SupplierID">@supplier.CompanyName</option>
+                                        }
+                                    }
+                                </select> 
+                            </td>
+                            <td>@item.QuantityPerUnit</td>
+                            <td>
+                                <input type="checkbox" checked="@item.Discontinued" disabled="true">
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                
+                </tfoot>
+            </table>
+        }
+    }
+    <button type="submit" asp-page-handler="Fetch">Fetch Products</button>&nbsp;&nbsp;
+    <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>&nbsp;&nbsp;
+    <button type="submit" asp-page-handler="New" formnovalidate>New Product</button>
+
+</form>
