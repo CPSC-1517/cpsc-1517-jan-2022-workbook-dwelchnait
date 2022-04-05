@@ -28,6 +28,22 @@
     }
 </style>
 
+@* sample of column formatting under Holiday.css
+    uses above styling
+    setup 2 column Single CRUD page
+
+    <section class="setflex">
+        <div class="onehalf">
+            put your query in this div
+        </div>
+        <div class="onehalf">
+            put your CRUD form in this div
+        </div>
+    </section>
+*@
+
+
+
 <h1>Category Products: Select Product for Maintenance</h1>
 
 <p>@Model.Feedback</p>
@@ -93,7 +109,7 @@
                             </td>
                             <td>@item.QuantityPerUnit</td>
                             <td>
-                                <input type="checkbox" checked="@item.Discontinued" disabled="true">
+                                <input type="checkbox" checked="@item.Discontinued">
                             </td>
                         </tr>
                     }

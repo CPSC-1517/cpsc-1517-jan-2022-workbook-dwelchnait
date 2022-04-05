@@ -52,6 +52,8 @@ namespace WebApp.Pages.Samples
         [BindProperty]
         public Product ProductInfo { get; set; }
 
+        //adding a =new() to the List<T> declaration ensures that you have AT MINIMUM
+        //  a list instance WHICH will be empty until you fill it.
         [BindProperty]
         public List<Category> CategoryList { get; set; } = new();
 
@@ -60,8 +62,13 @@ namespace WebApp.Pages.Samples
 
         public void OnGet()
         {
+            // the OnGet executes the first time the page is generated
+            // then on each Get request issued by the page (such as on RedirectToPage(),  PRG)
             PopulateLists();
-
+            if(productid.HasValue && productid > 0)
+            {
+                ProductInfo = _productServices.Product_GetById(productid.Value);
+            }
         }
         public void PopulateLists()
         {

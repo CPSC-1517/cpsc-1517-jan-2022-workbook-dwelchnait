@@ -49,7 +49,7 @@ namespace WebApp.Pages.Samples
         public void OnGet()
         {
             PopulateLists();
-            if(searcharg.HasValue && searcharg.Value > 0)
+            if (searcharg.HasValue && searcharg.Value > 0)
             {
                 ProductInfo = _productServices.Product_CategoryProducts(searcharg.Value);
             }

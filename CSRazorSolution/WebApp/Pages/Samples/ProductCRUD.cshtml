@@ -44,7 +44,75 @@
 
     @* TODO: setup the parts of the Product*@
 
-
+    @* create a control that will hold the product pkey value
+        this control should NOT be changable IF your pkey is an IDENTITY
+        this control CAN be visible (type="text") or hidden (type="hidden"), 
+        which is a design consideration
+    *@
+    <label>
+        ID:
+        <input type="text" asp-for="ProductInfo.ProductID" readonly data-val="false" />
+    </label>
+    <label>
+        Name:
+        <input type="text" asp-for="ProductInfo.ProductName" placeholder="product name" />
+    </label>
+    <label>
+        Category:
+        <select asp-for="ProductInfo.CategoryID">
+            @foreach(var item in Model.CategoryList)
+            {
+                <option value="@item.CategoryID" 
+                    selected=@(Model.ProductInfo != null && item.CategoryID == Model.ProductInfo.CategoryID)>
+                    @item.CategoryName
+                </option>
+            }
+        </select>
+    </label>
+    <label>
+        Supplier:
+        <select asp-for="ProductInfo.SupplierID">
+            @foreach(var item in Model.SupplierList)
+            {
+                <option value="@item.SupplierID" 
+                    selected=@(Model.ProductInfo != null && item.SupplierID == Model.ProductInfo.SupplierID)>
+                    @item.CompanyName
+                </option>
+            }
+        </select>
+    </label>
+    <label>
+        Unit Size:
+        <input type="text" asp-for="ProductInfo.QuantityPerUnit" placeholder="unit size" />
+    </label>
+    <label>
+        Min Order Qty:
+        <input type="number" asp-for="ProductInfo.MinimumOrderQuantity" placeholder="minimum order qty"
+             step="1" min="1"/>
+    </label>
+    <label>
+        Unit Price:
+        <input type="number" asp-for="ProductInfo.UnitPrice" placeholder="unit price"
+                 step="0.01" min="0.00"/>
+    </label>
+    <label>
+        QOO:
+        <input type="text" asp-for="ProductInfo.UnitsOnOrder" placeholder="units on order"
+           disabled="true"/>
+    </label>
+    @* for a checkbox, the transfer of data by default is either: not checked -> null, checked -> on
+        IF you are expecting a boolean (true or false) then use the attribute value="true"
+           this will result in: not checked -> null, checked -> true
+        Why does this work. REMEMBER: when an instance is create, the properties in your instance
+           will be set to: a) system defaults depending on datatype or b) constructor assignments.
+           THEREFORE the default of a boolean property will be "false"
+    *@
+    <label>
+        Discontinued:
+        <input type="checkbox" asp-for="ProductInfo.Discontinued" value="true" />
+        &nbsp;&nbsp; (discontinued if checked)
+    </label>
+    <br/><br/>
     @* Managing the buttons, restricting user access*@
     @if (Model.ProductInfo != null)
     {
@@ -53,7 +121,7 @@
         @* add Javascript prompt for delete confirmation using the onclick *@
         <button type="submit" asp-page-handler="Delete" formnovalidate
                 onclick="return confirm('Are you sure you wish to discontinue the product?')">
-            Delete
+            Discontinue
         </button>
         <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>
         <button type="submit" asp-page-handler="Search" formnovalidate>Search</button>
@@ -65,7 +133,7 @@
     @* add Javascript prompt for delete confirmation using the onclick *@
     <button type="submit" asp-page-handler="Delete" formnovalidate disabled
             onclick="return confirm('Are you sure you wish to discontinue the product?')">
-        Delete
+        Discontinue
     </button>
     <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>
     <button type="submit" asp-page-handler="Search" formnovalidate>Search</button>
