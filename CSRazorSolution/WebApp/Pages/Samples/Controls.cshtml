@@ -1,0 +1,172 @@
+﻿@page
+@model WebApp.Pages.Samples.ControlsModel
+@{
+    ViewData["Title"] = "Various Controls";
+}
+
+
+<style>
+    :root {
+        --max-body-width: 90rem;
+    }
+
+    .setflex {
+        display: flex;
+    }
+
+    .onethird{
+        width: 31%;
+        margin-right: 2%;
+    }
+
+    .onehalf {
+        width: 47%;
+        margin-right: 3%;
+    }
+
+    .smallbox {
+        width: 60px;
+    }
+
+    .bighalfpage {
+        width: 57%;
+        margin-right: 3%;
+    }
+
+    .smallhalfpage {
+        width: 37%;
+        margin-right: 3%;
+    }
+
+    .lefthalfpage {
+        width: 45%;
+        margin-right: 5%;
+    }
+
+    .righthalfpage {
+        width: 45%;
+        margin-left: 5%;
+    }
+
+    .danger {
+        color: var(--danger-text-color);
+        background-color: var(--danger-color);
+    }
+</style>
+
+<h1>Various Form Controls</h1>
+
+@if (!string.IsNullOrWhiteSpace(Model.Feedback))
+{
+    <p>@Model.Feedback</p><br/>
+}
+
+<section class="setflex">
+    <div class="onethird">
+        <h3>TextBoxes</h3>
+        <form method="post">
+            <label>
+                Email input
+                <input type="email" asp-for="EmailText"
+                    placeholder="enter email"/>
+            </label>
+            <br/>
+            <label>
+                Password input
+                <input type="password" asp-for="PasswordText"
+                    placeholder="enter password"/>
+            </label>
+            <br/>
+            <label>
+                Date input
+                <input type="date" asp-for="DateTimeText"
+                    placeholder="enter a date"/>
+            </label>
+            <br/>
+            <button type="submit" value="textbox" id="theTextButton"
+                name="theTextButton" asp-page-handler="Text">Text Submit</button>
+        </form>
+    </div>
+    <div class="onethird">
+        <h3>RadioButton, CheckBox and TextArea</h3>
+        <form method="post">
+            <label>
+                Select favourite meal<br/>
+            </label>
+            @*<input type="radio" asp-for="RadioMeal" value="breakfast"/>
+                &nbsp;Breakfast<br/>
+            <input type="radio" asp-for="RadioMeal" value="lunch"/>
+                &nbsp;Lunch<br/>
+            <input type="radio" asp-for="RadioMeal" value="dinner/supper"/>
+                &nbsp;Dinner/Supper<br/>
+            <input type="radio" asp-for="RadioMeal" value="snacks"/>
+                &nbsp;Snacks<br/>
+            *@
+            @foreach(var item in Model.RadioMeals)
+            {
+                <input type="radio" asp-for="RadioMeal" value="@item"/> @item<br/>
+            }
+            <br/>
+            <label>
+                <input type="checkbox" asp-for="AcceptanceBox" value=true />
+                    &nbsp; I agree to the terms
+            </label>
+            <br/>
+            <label>
+                Message
+                <textarea rows="5" cols="60" placeholder="enter a message"
+                    asp-for="MessageBody">@Model.MessageBody</textarea>
+            </label>
+            <br/>
+            <button type="submit" value="radiocheckarea" id="theRadioCheckAreaButton"
+                name="theRadioCheckAreaButton" asp-page-handler="RadioCheckArea">
+                Radio/Check/Area Submit</button>
+        </form>
+    </div>
+    <div class="onethird">
+        <h3>Lists and Slider</h3>
+        <form method="post">
+            <label>
+                Select favourite Ride<br/>
+                <select asp-for="MyRide">
+                    <option value="0">select a ride ...</option>
+                    @foreach(var item in Model.Rides)
+                    {
+                        <option value="@item.ValueId">@item.DisplayText</option>
+                    }
+                </select>
+            </label>
+            <br/>
+            <label>
+                Select favourite Vacation Spot
+                <input type="text" asp-for="VacationSpot"
+                    list = "VacationChoices" />
+                <datalist id="VacationChoices">
+                    @foreach(var item in Model.VacationSpotList)
+                    {
+                        //use if expected value is the same as the display value
+                        //<option value="@item">@item </option>
+                        <option value="@item"/>
+
+                    @*   use if the expected value is different then the display value
+                         this setup is the same as the drop down list
+
+                        <option value="@item.expectedvalue">@item.displayvalue</option>*@ 
+                   }
+                </datalist>
+            </label>
+            <br/>
+            <label>
+                Review of controls (bad < - > good)
+                <input type="range" min="0" max="10" steps="1" value="5"
+                    asp-for="RangeValue" checked="@Model.RangeValue" />
+            </label>
+            <br/>
+                <button type="submit" value="listslider" id="theListSliderButton"
+                name="theListSliderButton" asp-page-handler="ListSlider">
+                List/Slider Submit</button>
+
+        </form>
+    </div>
+</section>
+
