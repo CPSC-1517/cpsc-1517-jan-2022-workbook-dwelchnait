@@ -29,6 +29,17 @@
     }
 </style>
 
+@* include the validation libraries on the web page
+    this is done by using the RenderSection Scripts
+        located on the _Layout page (at the bottom)
+
+    RenderSections can be placed anywhere on your
+      cshtml page.
+*@
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+
 <h1>Product Maintenance: CRUD Product ID : @Model.productid</h1>
 
 @if (Model.HasFeedback)
@@ -51,11 +62,22 @@
     *@
     <label>
         ID:
-        <input type="text" asp-for="ProductInfo.ProductID" readonly data-val="false" />
+        @if(Model.ProductInfo == null)
+        {
+            <input type="text" asp-for="ProductInfo.ProductID" readonly data-val="false"
+             value="0"/>  
+        }
+        else
+        {
+            <input type="text" asp-for="ProductInfo.ProductID" readonly data-val="false"/>
+        }
+        <span asp-validation-for="ProductInfo.ProductID"></span>
+
     </label>
     <label>
         Name:
         <input type="text" asp-for="ProductInfo.ProductName" placeholder="product name" />
+        <span asp-validation-for="ProductInfo.ProductName"></span>
     </label>
     <label>
         Category:
@@ -68,6 +90,7 @@
                 </option>
             }
         </select>
+        <span asp-validation-for="ProductInfo.CategoryID"></span>
     </label>
     <label>
         Supplier:
@@ -80,25 +103,35 @@
                 </option>
             }
         </select>
+        <span asp-validation-for="ProductInfo.SupplierID"></span>
+
     </label>
     <label>
         Unit Size:
         <input type="text" asp-for="ProductInfo.QuantityPerUnit" placeholder="unit size" />
+        <span asp-validation-for="ProductInfo.QuantityPerUnit"></span>
+
     </label>
     <label>
         Min Order Qty:
         <input type="number" asp-for="ProductInfo.MinimumOrderQuantity" placeholder="minimum order qty"
              step="1" min="1"/>
+        <span asp-validation-for="ProductInfo.MinimumOrderQuantity"></span>
+
     </label>
     <label>
         Unit Price:
         <input type="number" asp-for="ProductInfo.UnitPrice" placeholder="unit price"
                  step="0.01" min="0.00"/>
+        <span asp-validation-for="ProductInfo.UnitPrice"></span>
+
     </label>
     <label>
         QOO:
         <input type="text" asp-for="ProductInfo.UnitsOnOrder" placeholder="units on order"
            disabled="true"/>
+        <span asp-validation-for="ProductInfo.UnitsOnOrder"></span>
+
     </label>
     @* for a checkbox, the transfer of data by default is either: not checked -> null, checked -> on
         IF you are expecting a boolean (true or false) then use the attribute value="true"
@@ -111,6 +144,8 @@
         Discontinued:
         <input type="checkbox" asp-for="ProductInfo.Discontinued" value="true" />
         &nbsp;&nbsp; (discontinued if checked)
+        <span asp-validation-for="ProductInfo.Discontinued"></span>
+
     </label>
     <br/><br/>
     @* Managing the buttons, restricting user access*@

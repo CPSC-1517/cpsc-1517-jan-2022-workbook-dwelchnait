@@ -81,6 +81,10 @@ namespace WestWindSystem.BLL
         //  web page (PageModel call statement)
         public int Product_AddProduct(Product item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException("Product data is missing");
+            }
             //this is an optional sample of validation of incoming data
             Product exists = _context.Products
                             .Where(x => x.ProductName.Equals(item.ProductName) &&
@@ -106,6 +110,9 @@ namespace WestWindSystem.BLL
             _context.Products.Add(item);
 
             // commit the LOCAL data to the database
+
+            //IF there are validation annotations on your Entity
+            //  they will be executed during the SaveChanges
             _context.SaveChanges();
 
             //AFTER the commit, your pkey value will NOW be available to you
@@ -122,16 +129,26 @@ namespace WestWindSystem.BLL
             //for an update, you MUST have the pkey value on your instance
             //if not, it will not work.
 
+            // ***** WARNING ****** 
+            // can cause PROBLEMS when being used with EntityEntry<t> processing
+
             //this technique returns an instance (object)
             //Product exists = _context.Products
             //                    .Where(x => x.ProductID == item.ProductID)
             //                    .FirstOrDefault();
+            //if (exists == null)
+            //{
+            //    throw new Exception($"{item.ProductName} with a size of {item.QuantityPerUnit}" +
+            //    $" from the selected supplier is not on file");
+            //}
+
+            // ****** BETTER ************
+            // this does NOT actually return an instance and thus has no
+            //   CONFLICT with using EntityEntry<T>
 
             //this technique does the search BUT returns only a boolean of success
-            bool exists = _context.Products.Any(x => x.ProductID == item.ProductID);
-
-            //DEPENDING on which technique you use, your error test will be different
-            //one:   if (exists == null) {....}
+            bool exists = _context.Products.Any(x => x.ProductID == item.ProductID);  
+            //if(!_context.Products.Any(x => x.ProductID == item.ProductID))
             if (!exists)
             {
                 throw new Exception($"{item.ProductName} with a size of {item.QuantityPerUnit}" +
@@ -148,7 +165,7 @@ namespace WestWindSystem.BLL
             return _context.SaveChanges();
         }
 
-        public int Product_DeletProduct(Product item)
+        public int Product_DeleteProduct(Product item)
         {
             //for an delete, you MUST have the pkey value on your instance
             //if not, it probably will not work as expected.
