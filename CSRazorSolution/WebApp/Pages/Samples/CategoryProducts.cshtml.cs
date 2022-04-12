@@ -81,7 +81,7 @@ namespace WebApp.Pages.Samples
 
         public IActionResult OnPostNew()
         {
-            return RedirectToPage("/Samples/ProductCRUD");
+            return RedirectToPage("/Samples/CRUDProduct");
         }
 
     }

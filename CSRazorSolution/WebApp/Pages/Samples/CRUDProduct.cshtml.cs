@@ -1,16 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-#region Additional Namespaces
-using WestWindSystem.BLL;       //this is where the services were coded
-using WestWindSystem.Entities;  //this is where the entity definition is coded
-using WebApp.Helpers;           //this is where the Paginator is coded
-#endregion
-
+using WestWindSystem.BLL;
+using WestWindSystem.Entities;
 
 namespace WebApp.Pages.Samples
 {
-    public class ProductCRUDModel : PageModel
+    public class CRUDProductModel : PageModel
     {
         #region Private service fields & class constructor
         private readonly ILogger<IndexModel> _logger;
@@ -19,7 +15,7 @@ namespace WebApp.Pages.Samples
         private readonly SupplierServices _supplierServices;
 
 
-        public ProductCRUDModel(ILogger<IndexModel> logger,
+        public CRUDProductModel(ILogger<IndexModel> logger,
             ProductServices productservices,
             CategoryServices categoryservices,
             SupplierServices supplierservices)
@@ -46,11 +42,11 @@ namespace WebApp.Pages.Samples
         #endregion
 
 
-        [BindProperty(SupportsGet = true)]
-        public int? productid { get; set; }
-
         [BindProperty]
         public Product ProductInfo { get; set; }
+
+        [BindProperty(SupportsGet =true)]
+        public int? productid { get; set; }
 
         //adding a =new() to the List<T> declaration ensures that you have AT MINIMUM
         //  a list instance WHICH will be empty until you fill it.
@@ -59,17 +55,17 @@ namespace WebApp.Pages.Samples
 
         [BindProperty]
         public List<Supplier> SupplierList { get; set; } = new();
-
         public void OnGet()
         {
             // the OnGet executes the first time the page is generated
             // then on each Get request issued by the page (such as on RedirectToPage(),  PRG)
             PopulateLists();
-            if(productid.HasValue && productid > 0)
+            if(productid.HasValue && productid.Value > 0)
             {
                 ProductInfo = _productServices.Product_GetById(productid.Value);
             }
         }
+
         public void PopulateLists()
         {
             CategoryList = _categoryServices.Category_List();
@@ -79,14 +75,14 @@ namespace WebApp.Pages.Samples
         public IActionResult OnPostClear()
         {
             Feedback = "";
-            //searcharg = null;
+            //productid = null;
             ModelState.Clear();
             return RedirectToPage(new { productid = (int?)null });
         }
 
         public IActionResult OnPostSearch()
         {
-            return RedirectToPage("/Samples/CategoryProducts");
+            return Redirect("/Samples/CategoryProducts");
         }
 
         public IActionResult OnPostNew()
@@ -105,8 +101,10 @@ namespace WebApp.Pages.Samples
                     //In our example, I am expecting the new product id to
                     //  be returned from the BLL service
                     int newproductid = _productServices.Product_AddProduct(ProductInfo);
+
                     //always give feedback to the client user
                     Feedback =$"Product id ({newproductid}) has been added to the system";
+
                     //return needed due to IActionResult
                     return RedirectToPage(new { productid = newproductid });
                 }
@@ -226,12 +224,16 @@ namespace WebApp.Pages.Samples
             return Page();
         }
 
+
+
         private Exception GetInnerException(Exception ex)
         {
             //drill down to the REAL ERROR message
-            while(ex.InnerException != null)
+            while (ex.InnerException != null)
                 ex = ex.InnerException;
             return ex;
         }
+
+
     }
 }

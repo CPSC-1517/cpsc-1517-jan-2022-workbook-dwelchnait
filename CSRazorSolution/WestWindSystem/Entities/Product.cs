@@ -22,31 +22,27 @@ namespace WestWindSystem.Entities
 
         [Key]
         public int ProductID { get; set; }
-        [Required(ErrorMessage ="Product name is required")]
-        [StringLength(40, ErrorMessage ="Product name is limited to 40 characters")]
+        [Required(ErrorMessage = "Product name is required")]
+        [StringLength(40, ErrorMessage = "Product name is limited to 40 characters")]
         public string ProductName { get; set; }
         public int SupplierID { get; set; }
         public int CategoryID { get; set; }
-        [Required]
-        [StringLength(20)]
+        [Required(ErrorMessage = "Product quantity per unit is required")]
+        [StringLength(20, ErrorMessage = "Product quantity per unit is limited to 20 characters")]
         public string QuantityPerUnit { get; set; }
-        [Range(0,100,ErrorMessage ="Order quantity must be between 0 and 100")]
+        [Range(0, 100, ErrorMessage = "Order quantity must be between 0 and 100")]
         public short? MinimumOrderQuantity { get; set; }
 
-        // problem: a) on form input control value is displayed with x.0000 (4 decimal places)
-        //          b) using HTML5 control for value in input set to step="0.01" (2 decimal places)
-        //
-        // forces one to remove the extra 2 decimal places
-        //
-        // work-around: return the get value formatted to 2 decimal places
-        //
-        // fully implement the property (UnitPrice)
+   
 
         [Column(TypeName = "money")]
-        public decimal UnitPrice { 
-            get { return decimal.Parse(UnitPrice.ToString("0.00")); }
-            set { UnitPrice = value; }
+        public decimal UnitPrice
+        {
+            get { return decimal.Parse(_UnitPrice.ToString("0.00")); }
+            set { _UnitPrice = value; }
         }
+        //public decimal UnitPrice { get; set; }
+
         public int UnitsOnOrder { get; set; }
         public bool Discontinued { get; set; }
 

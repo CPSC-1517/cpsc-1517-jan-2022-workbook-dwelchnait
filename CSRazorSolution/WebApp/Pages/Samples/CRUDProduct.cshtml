@@ -1,9 +1,9 @@
 ﻿@page "{productid?}"
-@model WebApp.Pages.Samples.ProductCRUDModel
+@model WebApp.Pages.Samples.CRUDProductModel
 @{
-        ViewData["Title"] = "Product Maintenance";
-
+            ViewData["Title"] = "Product Maintenance";
 }
+
 
 <style>
    :root {
@@ -29,18 +29,14 @@
     }
 </style>
 
-@* include the validation libraries on the web page
-    this is done by using the RenderSection Scripts
-        located on the _Layout page (at the bottom)
-
-    RenderSections can be placed anywhere on your
-      cshtml page.
-*@
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
 }
 
+
 <h1>Product Maintenance: CRUD Product ID : @Model.productid</h1>
+
+
 
 @if (Model.HasFeedback)
 {
@@ -52,8 +48,7 @@
 }
 
 <form method="post">
-
-    @* TODO: setup the parts of the Product*@
+ @* TODO: setup the parts of the Product*@
 
     @* create a control that will hold the product pkey value
         this control should NOT be changable IF your pkey is an IDENTITY
@@ -129,7 +124,7 @@
     <label>
         QOO:
         <input type="text" asp-for="ProductInfo.UnitsOnOrder" placeholder="units on order"
-           disabled="true"/>
+           readonly/>
         <span asp-validation-for="ProductInfo.UnitsOnOrder"></span>
 
     </label>
@@ -147,9 +142,10 @@
         <span asp-validation-for="ProductInfo.Discontinued"></span>
 
     </label>
+
     <br/><br/>
-    @* Managing the buttons, restricting user access*@
-    @if (Model.ProductInfo != null)
+       @* Managing the buttons, restricting user access*@
+    @if (Model.productid.HasValue)
     {
         <button type="submit" asp-page-handler="New" disabled>Save New</button>
         <button type="submit" asp-page-handler="Update">Update</button>
@@ -158,19 +154,17 @@
                 onclick="return confirm('Are you sure you wish to discontinue the product?')">
             Discontinue
         </button>
-        <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>
-        <button type="submit" asp-page-handler="Search" formnovalidate>Search</button>
     }
     else
     {
-    <button type="submit" asp-page-handler="New">Save New</button>
-    <button type="submit" asp-page-handler="Update" disabled>Update</button>
-    @* add Javascript prompt for delete confirmation using the onclick *@
-    <button type="submit" asp-page-handler="Delete" formnovalidate disabled
-            onclick="return confirm('Are you sure you wish to discontinue the product?')">
-        Discontinue
-    </button>
+        <button type="submit" asp-page-handler="New">Save New</button>
+        <button type="submit" asp-page-handler="Update" disabled>Update</button>
+        @* add Javascript prompt for delete confirmation using the onclick *@
+        <button type="submit" asp-page-handler="Delete" formnovalidate disabled
+                onclick="return confirm('Are you sure you wish to discontinue the product?')">
+            Discontinue
+        </button>
+    }
     <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>
     <button type="submit" asp-page-handler="Search" formnovalidate>Search</button>
-    }
 </form>
